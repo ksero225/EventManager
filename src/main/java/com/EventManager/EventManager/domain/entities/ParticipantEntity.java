@@ -2,6 +2,7 @@ package com.EventManager.EventManager.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder
 @Table(name = "participants")
 public class ParticipantEntity {
     @Id
@@ -22,7 +24,7 @@ public class ParticipantEntity {
     @Column(name = "participant_surname")
     private String participantSurname;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "event_id")
     private EventEntity event;
 

@@ -1,36 +1,38 @@
 package com.EventManager.EventManager.domain.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "Event")
 public class EventEntity {
     @Id
     @Column(name = "event_id")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "event_id_seq")
     private Long eventId;
 
     @Column(name = "event_name")
     private String eventName;
 
     @Column(name = "event_start_date")
-    private LocalDate eventStartDate;
+    private LocalDateTime eventStartDate;
 
     @Column(name = "event_end_date")
-    private LocalDate eventEndDate;
+    private LocalDateTime eventEndDate;
 
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "event_location",
             joinColumns = @JoinColumn(name = "event_id"),
@@ -38,9 +40,9 @@ public class EventEntity {
     )
     private LocationEntity eventLocalization;
 
-    @Column(name = "event_ticket_price", scale = 2)
-    private BigDecimal eventTicketPrice;
+    @Column(name = "event_ticket_price")
+    private float eventTicketPrice;
 
-    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ParticipantEntity> participants = new ArrayList<>();
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<ParticipantEntity> participants = new HashSet<>();
 }
