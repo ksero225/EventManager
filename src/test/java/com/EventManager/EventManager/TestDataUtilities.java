@@ -54,4 +54,31 @@ public class TestDataUtilities {
                 .participants(new HashSet<>())
                 .build();
     }
+
+    public static LocationEntity createTestLocationEntityA(){
+        return LocationEntity.builder()
+                .locationId(1L)
+                .address("adresA")
+                .locationCity("locationCityA")
+                .locationCountry("locationCountryA")
+                .build();
+    }
+
+    public static LocationEntity createTestLocationEntityB(){
+        return LocationEntity.builder()
+                .locationId(2L)
+                .address("adresB")
+                .locationCity("locationCityB")
+                .locationCountry("locationCountryB")
+                .build();
+    }
+
+    public static LocationEntity createTestLocationEntityC(){
+        return LocationEntity.builder()
+                .locationId(3L)
+                .address("adresC")
+                .locationCity("locationCityC")
+                .locationCountry("locationCountryC")
+                .build();
+    }
 }
