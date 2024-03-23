@@ -1,8 +1,11 @@
 package com.EventManager.EventManager;
 
+import com.EventManager.EventManager.domain.dto.EventDto;
 import com.EventManager.EventManager.domain.entities.EventEntity;
 import com.EventManager.EventManager.domain.entities.LocationEntity;
+import com.EventManager.EventManager.domain.entities.ParticipantEntity;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -20,7 +23,22 @@ public class TestDataUtilities {
                 .eventStartDate(startDate)
                 .eventEndDate(endDate)
                 .eventLocalization(null)
-                .eventTicketPrice(12.20f)
+                .eventTicketPrice(BigDecimal.valueOf(12.20))
+                .participants(new HashSet<>())
+                .build();
+    }
+
+    public static EventDto createTestEventDtoA(){
+        LocalDateTime startDate = LocalDateTime.of(2024, 1, 1, 1, 1);
+        LocalDateTime endDate = LocalDateTime.of(2024, 1, 1, 23, 59);
+
+        return EventDto.builder()
+                .eventId(1L)
+                .eventName("testA")
+                .eventStartDate(startDate)
+                .eventEndDate(endDate)
+                .eventLocalization(null)
+                .eventTicketPrice(BigDecimal.valueOf(12.20))
                 .participants(new HashSet<>())
                 .build();
     }
@@ -35,7 +53,7 @@ public class TestDataUtilities {
                 .eventStartDate(startDate)
                 .eventEndDate(endDate)
                 .eventLocalization(null)
-                .eventTicketPrice(12.50f)
+                .eventTicketPrice(BigDecimal.valueOf(12.50))
                 .participants(new HashSet<>())
                 .build();
     }
@@ -50,7 +68,7 @@ public class TestDataUtilities {
                 .eventStartDate(startDate)
                 .eventEndDate(endDate)
                 .eventLocalization(null)
-                .eventTicketPrice(13.50f)
+                .eventTicketPrice(BigDecimal.valueOf(13.50))
                 .participants(new HashSet<>())
                 .build();
     }
@@ -79,6 +97,33 @@ public class TestDataUtilities {
                 .address("adresC")
                 .locationCity("locationCityC")
                 .locationCountry("locationCountryC")
+                .build();
+    }
+
+    public static ParticipantEntity createTestParticipantEntityA(){
+        return ParticipantEntity.builder()
+                .participantId(1L)
+                .participantName("participantNameA")
+                .participantSurname("participantSurnameA")
+                .event(null)
+                .build();
+    }
+
+    public static ParticipantEntity createTestParticipantEntityB(){
+        return ParticipantEntity.builder()
+                .participantId(2L)
+                .participantName("participantNameB")
+                .participantSurname("participantSurnameB")
+                .event(null)
+                .build();
+    }
+
+    public static ParticipantEntity createTestParticipantEntityC(){
+        return ParticipantEntity.builder()
+                .participantId(3L)
+                .participantName("participantNameC")
+                .participantSurname("participantSurnameC")
+                .event(null)
                 .build();
     }
 }

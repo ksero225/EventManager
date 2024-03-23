@@ -41,7 +41,7 @@ public class EventEntity {
     private LocationEntity eventLocalization;
 
     @Column(name = "event_ticket_price")
-    private float eventTicketPrice;
+    private BigDecimal eventTicketPrice;
 
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<ParticipantEntity> participants = new HashSet<>();
