@@ -104,7 +104,7 @@ public class EventController {
     private void checkEventDtoValidation(String eventName, EventDto eventDto) {
         EventEntity eventEntity = eventMapper.mapFrom(eventDto);
 
-        if (!eventService.doesEventNameExists(eventName)){
+        if (!eventService.doesEventNameExists(eventName)) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND,
                     "Passed event name does not exists in database"
@@ -126,7 +126,7 @@ public class EventController {
         }
     }
 
-    private void checkEventDtoValidation(EventDto eventDto){
+    private void checkEventDtoValidation(EventDto eventDto) {
 
         EventEntity eventEntity = eventMapper.mapFrom(eventDto);
 
