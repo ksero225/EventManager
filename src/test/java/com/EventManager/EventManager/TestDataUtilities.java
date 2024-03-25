@@ -6,10 +6,7 @@ import com.EventManager.EventManager.domain.entities.LocationEntity;
 import com.EventManager.EventManager.domain.entities.ParticipantEntity;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.HashSet;
 
 public class TestDataUtilities {
@@ -23,7 +20,7 @@ public class TestDataUtilities {
                 .eventStartDate(startDate)
                 .eventEndDate(endDate)
                 .eventLocalization(null)
-                .eventTicketPrice(BigDecimal.valueOf(12.20))
+                .eventTicketPrice(BigDecimal.valueOf(12.11))
                 .participants(new HashSet<>())
                 .build();
     }
@@ -38,7 +35,7 @@ public class TestDataUtilities {
                 .eventStartDate(startDate)
                 .eventEndDate(endDate)
                 .eventLocalization(null)
-                .eventTicketPrice(BigDecimal.valueOf(12.20))
+                .eventTicketPrice(BigDecimal.valueOf(12.11))
                 .participants(new HashSet<>())
                 .build();
     }
@@ -53,7 +50,7 @@ public class TestDataUtilities {
                 .eventStartDate(startDate)
                 .eventEndDate(endDate)
                 .eventLocalization(null)
-                .eventTicketPrice(BigDecimal.valueOf(12.50))
+                .eventTicketPrice(BigDecimal.valueOf(12.22))
                 .participants(new HashSet<>())
                 .build();
     }
@@ -68,7 +65,7 @@ public class TestDataUtilities {
                 .eventStartDate(startDate)
                 .eventEndDate(endDate)
                 .eventLocalization(null)
-                .eventTicketPrice(BigDecimal.valueOf(13.50))
+                .eventTicketPrice(BigDecimal.valueOf(12.33))
                 .participants(new HashSet<>())
                 .build();
     }

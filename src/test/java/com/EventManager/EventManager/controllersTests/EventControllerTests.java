@@ -5,7 +5,6 @@ import com.EventManager.EventManager.TestDataUtilities;
 import com.EventManager.EventManager.domain.dto.EventDto;
 import com.EventManager.EventManager.domain.entities.EventEntity;
 import com.EventManager.EventManager.services.intefaces.EventService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.Test;
@@ -17,7 +16,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MockMvcResultMatchersDsl;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -118,7 +116,7 @@ public class EventControllerTests {
         ).andExpect(
                 MockMvcResultMatchers.jsonPath("$.eventLocalization").isEmpty()
         ).andExpect(
-                MockMvcResultMatchers.jsonPath("$.eventTicketPrice").value(12.20)
+                MockMvcResultMatchers.jsonPath("$.eventTicketPrice").value(12.11)
         ).andExpect(
                 MockMvcResultMatchers.jsonPath("$.participants").isEmpty()
         );
@@ -147,9 +145,19 @@ public class EventControllerTests {
         ).andExpect(
                 MockMvcResultMatchers.jsonPath("$[0].eventLocalization").isEmpty()
         ).andExpect(
-                MockMvcResultMatchers.jsonPath("$[0].eventTicketPrice").value(12.20)
+                MockMvcResultMatchers.jsonPath("$[0].eventTicketPrice").value(12.11)
         ).andExpect(
                 MockMvcResultMatchers.jsonPath("$[0].participants").isEmpty()
+        );
+    }
+
+    @Test
+    public void testThatListEventsReturnsHttpStatus204NoContent() throws Exception {
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/event")
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(
+                MockMvcResultMatchers.status().isNoContent()
         );
     }
 
@@ -226,6 +234,84 @@ public class EventControllerTests {
                         .content(eventEntityJson)
         ).andExpect(
                 MockMvcResultMatchers.status().isBadRequest()
+        );
+    }
+
+    @Test
+    public void testThatFullUpdateReturnsUpdatedEvent() throws Exception {
+        EventEntity eventEntity = TestDataUtilities.createTestEventEntityA();
+
+        eventService.save(eventEntity);
+
+        EventDto eventDto = TestDataUtilities.createTestEventDtoA();
+        eventDto.setEventName("UPDATED");
+
+        String jsonEventDto = objectMapper.writeValueAsString(eventDto);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.put("/event/testA")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonEventDto)
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.eventId").value(1L)
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.eventName").value("UPDATED")
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.eventStartDate").value("2024-01-01T01:01")
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.eventEndDate").value("2024-01-01T23:59")
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.eventLocalization").isEmpty()
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.eventTicketPrice").value(12.11)
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.participants").isEmpty()
+        ).andExpect(
+                MockMvcResultMatchers.status().isOk()
+        );
+    }
+
+    @Test
+    public void testThatPartialUpdateEventReturns() throws Exception {
+        EventEntity eventEntity = TestDataUtilities.createTestEventEntityA();
+
+        eventService.save(eventEntity);
+
+        EventDto eventDto = TestDataUtilities.createTestEventDtoA();
+        eventDto.setEventName("UPDATED");
+
+        String jsonEventDto = objectMapper.writeValueAsString(eventDto);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.patch("/event/testA")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonEventDto)
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.eventName").value("UPDATED")
+        ).andExpect(
+                MockMvcResultMatchers.status().isOk()
+        );
+    }
+
+    @Test
+    public void testThatDeleteEventReturnsHttpStatus404NotFound() throws Exception {
+        mockMvc.perform(
+                MockMvcRequestBuilders.delete("/event/999")
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(
+                MockMvcResultMatchers.status().isNotFound()
+        );
+    }
+
+    @Test
+    public void testThatDeleteEventReturnsHttpStatus204NoContentWhenEventDeletedSuccessfully() throws Exception {
+        EventEntity eventEntity = TestDataUtilities.createTestEventEntityA();
+        eventService.save(eventEntity);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.delete("/event/testA")
+        ).andExpect(
+                MockMvcResultMatchers.status().isNoContent()
         );
     }
 }

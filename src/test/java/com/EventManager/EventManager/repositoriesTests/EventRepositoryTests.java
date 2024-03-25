@@ -49,7 +49,7 @@ public class EventRepositoryTests {
         eventRepository.save(eventC);
 
         Iterable<EventEntity> result = eventRepository.findAll();
-        System.out.println(result);
+
         assertThat(result)
                 .hasSize(3)
                 .containsExactlyInAnyOrder(

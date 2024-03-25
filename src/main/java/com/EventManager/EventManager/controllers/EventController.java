@@ -68,7 +68,7 @@ public class EventController {
 
         checkEventDtoValidation(eventName, eventDto);
 
-        eventDto.setEventName(eventName);
+        //eventDto.setEventName(eventName);
 
         EventEntity eventEntity = eventMapper.mapFrom(eventDto);
         EventEntity savedEventEntity = eventService.save(eventEntity);
@@ -93,7 +93,10 @@ public class EventController {
             eventService.delete(eventName);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "Passed event name does not exists in database"
+            );
         }
 
     }
