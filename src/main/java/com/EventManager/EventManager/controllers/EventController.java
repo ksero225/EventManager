@@ -48,9 +48,9 @@ public class EventController {
         return events.stream().map(eventMapper::mapTo).collect(Collectors.toList());
     }
 
-    @GetMapping(path = "/event/{id}")
-    public ResponseEntity<EventDto> getEventById(@PathVariable("id") Long eventId) {
-        Optional<EventEntity> foundEvent = eventService.findOne(eventId);
+    @GetMapping(path = "/event/{eventName}")
+    public ResponseEntity<EventDto> getEventById(@PathVariable("eventName") String eventName) {
+        Optional<EventEntity> foundEvent = eventService.findOne(eventName);
 
         return foundEvent.map(EventEntity -> {
             EventDto eventDto = eventMapper.mapTo(EventEntity);

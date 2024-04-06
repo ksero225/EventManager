@@ -1,14 +1,12 @@
 package com.EventManager.EventManager.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Data
 @AllArgsConstructor
@@ -44,5 +42,31 @@ public class EventEntity {
     private BigDecimal eventTicketPrice;
 
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonManagedReference
     private Set<ParticipantEntity> participants = new HashSet<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        EventEntity that = (EventEntity) o;
+        return Objects.equals(eventId, that.eventId) && Objects.equals(eventName, that.eventName) && Objects.equals(eventStartDate, that.eventStartDate) && Objects.equals(eventEndDate, that.eventEndDate) && Objects.equals(eventLocalization, that.eventLocalization) && Objects.equals(eventTicketPrice, that.eventTicketPrice);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(eventId, eventName, eventStartDate, eventEndDate, eventLocalization, eventTicketPrice);
+    }
+
+    @Override
+    public String toString() {
+        return "EventEntity{" +
+                "eventId=" + eventId +
+                ", eventName='" + eventName + '\'' +
+                ", eventStartDate=" + eventStartDate +
+                ", eventEndDate=" + eventEndDate +
+                ", eventLocalization=" + eventLocalization +
+                ", eventTicketPrice=" + eventTicketPrice +
+                '}';
+    }
 }

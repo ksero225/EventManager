@@ -21,7 +21,7 @@ public class TestDataUtilities {
                 .eventEndDate(endDate)
                 .eventLocalization(null)
                 .eventTicketPrice(BigDecimal.valueOf(12.11))
-                .participants(new HashSet<>())
+                .participants(null)
                 .build();
     }
 

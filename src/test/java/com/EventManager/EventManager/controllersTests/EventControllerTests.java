@@ -167,7 +167,7 @@ public class EventControllerTests {
         eventService.save(eventEntity);
 
         mockMvc.perform(
-                MockMvcRequestBuilders.get("/event/" + eventEntity.getEventId())
+                MockMvcRequestBuilders.get("/event/" + eventEntity.getEventName())
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(
                 MockMvcResultMatchers.status().isOk()

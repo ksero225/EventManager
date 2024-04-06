@@ -33,8 +33,8 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public Optional<EventEntity> findOne(Long eventId) {
-        return eventRepository.findById(eventId);
+    public Optional<EventEntity> findOne(String eventName) {
+        return eventRepository.findByEventName(eventName);
     }
 
     @Override

@@ -12,7 +12,7 @@ public interface EventService {
 
     List<EventEntity> findAll();
 
-    Optional<EventEntity> findOne(Long eventId);
+    Optional<EventEntity> findOne(String eventName);
 
     EventEntity partialUpdate(String eventName, EventEntity eventEntity);
 
