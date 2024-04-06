@@ -16,3 +16,10 @@ public class ParticipantDto {
     private String participantSurname;
     private EventEntity event;
 }
+
+
+//TEST
+//TEST
+//TEST
+//TEST
+//TEST
