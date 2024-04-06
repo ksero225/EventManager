@@ -10,4 +10,5 @@ public class EventManagerApplication {
 		SpringApplication.run(EventManagerApplication.class, args);
 	}
 
+	//test
 }
