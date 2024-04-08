@@ -16,14 +16,3 @@ public class ParticipantDto {
     private String participantSurname;
     private EventEntity event;
 }
-
-
-//TEST3
-//TEST3
-//TEST3
-//TEST3
-//TEST3
-
-//TEST-BRANCH TEST
-
-//TEST PULL-REQUEST
