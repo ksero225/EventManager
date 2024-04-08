@@ -89,4 +89,10 @@ public class ParticipantController {
         return new ResponseEntity<>(participantMapper.mapTo(savedParticipantEntity), HttpStatus.OK);
     }
 
+    @DeleteMapping(path = "/participants/{participantId}")
+    public ResponseEntity<Void> deleteParticipantById(@PathVariable("participantId") Long participantId){
+        participantService.deleteById(participantId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
 }

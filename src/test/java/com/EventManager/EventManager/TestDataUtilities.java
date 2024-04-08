@@ -1,6 +1,7 @@
 package com.EventManager.EventManager;
 
 import com.EventManager.EventManager.domain.dto.EventDto;
+import com.EventManager.EventManager.domain.dto.ParticipantDto;
 import com.EventManager.EventManager.domain.entities.EventEntity;
 import com.EventManager.EventManager.domain.entities.LocationEntity;
 import com.EventManager.EventManager.domain.entities.ParticipantEntity;
@@ -99,6 +100,15 @@ public class TestDataUtilities {
 
     public static ParticipantEntity createTestParticipantEntityA(){
         return ParticipantEntity.builder()
+                .participantId(1L)
+                .participantName("participantNameA")
+                .participantSurname("participantSurnameA")
+                .event(null)
+                .build();
+    }
+
+    public static ParticipantDto createTestParticipantDtoA(){
+        return ParticipantDto.builder()
                 .participantId(1L)
                 .participantName("participantNameA")
                 .participantSurname("participantSurnameA")

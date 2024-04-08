@@ -24,6 +24,9 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
@@ -60,7 +63,7 @@ public class ParticipantControllerTests {
         participant.setEvent(event);
 
         participantService.save(participant);
-        
+
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/participants/1")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -113,5 +116,73 @@ public class ParticipantControllerTests {
         ).andExpect(
                 MockMvcResultMatchers.jsonPath("$[1].participantSurname").value("participantSurnameB")
         );
+    }
+
+    @Test
+    public void testThatFullUpdateParticipantReturnsUpdateParticipant() throws Exception {
+        ParticipantEntity participantEntity = TestDataUtilities.createTestParticipantEntityA();
+
+        participantService.save(participantEntity);
+
+        ParticipantDto participantDto = TestDataUtilities.createTestParticipantDtoA();
+        participantDto.setParticipantName("UPDATED");
+
+        String jsonParticipantDto = objectMapper.writeValueAsString(participantDto);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.put("/participants/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonParticipantDto)
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.participantName").value("UPDATED")
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.participantSurname").value("participantSurnameA")
+        );
+    }
+
+    @Test
+    public void testThatPartialUpdateReturnsHttpStatus200Ok() throws Exception {
+        ParticipantEntity participantEntity = TestDataUtilities.createTestParticipantEntityA();
+
+        participantService.save(participantEntity);
+
+        ParticipantDto participantDto = TestDataUtilities.createTestParticipantDtoA();
+        participantDto.setParticipantName("UPDATED");
+
+        String jsonParticipantDto = objectMapper.writeValueAsString(participantDto);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.patch("/participants/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonParticipantDto)
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.participantName").value("UPDATED")
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.participantSurname").value("participantSurnameA")
+        );
+    }
+
+    @Test
+    public void testThatDeleteParticipantByIdReturnsHttpStatus204NoContent() throws Exception {
+        ParticipantEntity participantEntity = TestDataUtilities.createTestParticipantEntityA();
+
+        participantService.save(participantEntity);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/participants/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.participantName").value("participantNameA")
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.participantSurname").value("participantSurnameA")
+        );
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.delete("/participants/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(
+                MockMvcResultMatchers.status().isNoContent()
+        );
+
     }
 }

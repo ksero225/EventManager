@@ -11,4 +11,6 @@ public interface ParticipantService {
     Optional<ParticipantEntity> findOne(Long participantId);
 
     ParticipantEntity partialUpdate(ParticipantEntity participantEntity);
+
+    void deleteById(Long participantId);
 }
